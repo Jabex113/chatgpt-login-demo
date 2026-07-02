@@ -1,0 +1,204 @@
+@import "tailwindcss";
+
+@theme {
+  --color-border: hsl(240 5.9% 15%);
+  --color-input: hsl(240 5.9% 15%);
+  --color-ring: hsl(240 4.9% 83.9%);
+  --color-background: hsl(240 10% 3.9%);
+  --color-foreground: hsl(0 0% 98%);
+  
+  --color-primary: hsl(0 0% 98%);
+  --color-primary-foreground: hsl(240 5.9% 10%);
+  
+  --color-secondary: hsl(240 3.7% 15.9%);
+  --color-secondary-foreground: hsl(0 0% 98%);
+  
+  --color-destructive: hsl(0 62.8% 30.6%);
+  --color-destructive-foreground: hsl(0 0% 98%);
+  
+  --color-muted: hsl(240 3.7% 15.9%);
+  --color-muted-foreground: hsl(240 5% 64.9%);
+  
+  --color-accent: hsl(240 3.7% 15.9%);
+  --color-accent-foreground: hsl(0 0% 98%);
+  
+  --color-popover: hsl(240 10% 3.9%);
+  --color-popover-foreground: hsl(0 0% 98%);
+  
+  --color-card: hsl(240 10% 3.9%);
+  --color-card-foreground: hsl(0 0% 98%);
+  
+  --radius-lg: 0.5rem;
+  --radius-md: calc(0.5rem - 2px);
+  --radius-sm: calc(0.5rem - 4px);
+  
+  --font-sans: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+:root {
+  --background: hsl(240 10% 3.9%);
+  --foreground: hsl(0 0% 98%);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+/* Custom streaming text cursor and thinking-shimmer matching shadcn */
+.thinking-shimmer {
+  background: linear-gradient(90deg, #71717a 25%, #e4e4e7 50%, #71717a 75%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 1.5s linear infinite;
+}
+
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.streaming-cursor {
+  display: inline-block;
+  margin-left: 4px;
+  vertical-align: middle;
+  animation: caret-blink 1.25s ease-out infinite;
+}
+
+@keyframes caret-blink {
+  0%, 70%, 100% {
+    opacity: 1;
+  }
+  20%, 50% {
+    opacity: 0;
+  }
+}
+
+/* Scrollbar & scroll-fade effects matching shadcn radix */
+@property --scroll-fade-t {
+  syntax: "<length-percentage>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+@property --scroll-fade-b {
+  syntax: "<length-percentage>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+@property --scroll-fade-s {
+  syntax: "<length-percentage>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+@property --scroll-fade-e {
+  syntax: "<length-percentage>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+@keyframes scroll-fade-reveal-t {
+  0% {
+    --scroll-fade-t: 0px;
+  }
+  to {
+    --scroll-fade-t: var(--_scroll-fade-size-t, var(--scroll-fade-size, min(12%, 2.5rem)));
+  }
+}
+
+@keyframes scroll-fade-reveal-b {
+  0% {
+    --scroll-fade-b: var(--_scroll-fade-size-b, var(--scroll-fade-size, min(12%, 2.5rem)));
+  }
+  to {
+    --scroll-fade-b: 0px;
+  }
+}
+
+@keyframes scroll-fade-reveal-s {
+  0% {
+    --scroll-fade-s: 0px;
+  }
+  to {
+    --scroll-fade-s: var(--_scroll-fade-size-s, var(--scroll-fade-size, min(12%, 2.5rem)));
+  }
+}
+
+@keyframes scroll-fade-reveal-e {
+  0% {
+    --scroll-fade-e: var(--_scroll-fade-size-e, var(--scroll-fade-size, min(12%, 2.5rem)));
+  }
+  to {
+    --scroll-fade-e: 0px;
+  }
+}
+
+.scroll-fade-b {
+  --_scroll-fade-size-b: var(--scroll-fade-b-size, var(--scroll-fade-size, min(12%, 2.5rem)));
+  --scroll-fade-mask: linear-gradient(to bottom, #000 0, #000 calc(100% - var(--scroll-fade-b, 0px)), transparent 100%);
+  -webkit-mask-image: var(--scroll-fade-mask);
+  mask-image: var(--scroll-fade-mask);
+  -webkit-mask-composite: source-in;
+  mask-repeat: no-repeat;
+  mask-composite: intersect;
+}
+
+@supports (animation-timeline: scroll()) {
+  .scroll-fade-b {
+    animation: 1ms ease-in-out scroll-fade-reveal-b;
+    animation-timeline: scroll(self y);
+    animation-range: calc(100% - var(--scroll-fade-reveal, 6rem)) 100%;
+    animation-fill-mode: both;
+  }
+}
+
+@supports not (animation-timeline: scroll()) {
+  .scroll-fade-b {
+    --scroll-fade-b: var(--_scroll-fade-size-b);
+  }
+}
+
+.scroll-fade-none {
+  --scroll-fade-mask: none !important;
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+}
+
+.scroll-fade-4 {
+  --scroll-fade-size: 1rem;
+}
+
+.scroll-fade-24 {
+  --scroll-fade-size: 6rem;
+}
+
+.scroll-fade-\[15\%\] {
+  --scroll-fade-size: 15%;
+}
+
+.scroll-fade-b-8 {
+  --scroll-fade-b-size: 2rem;
+}
+
+.scroll-fade-t-2 {
+  --scroll-fade-t-size: 0.5rem;
+}
+
+@utility scrollbar-thin {
+  scrollbar-width: thin;
+}
+
+/* Hide scrollbar thumb/track during active autoscroll */
+[data-autoscrolling="true"]::-webkit-scrollbar-thumb,
+[data-autoscrolling]::-webkit-scrollbar-thumb {
+  background-color: transparent !important;
+}
+[data-autoscrolling="true"]::-webkit-scrollbar-track,
+[data-autoscrolling]::-webkit-scrollbar-track {
+  background-color: transparent !important;
+}
